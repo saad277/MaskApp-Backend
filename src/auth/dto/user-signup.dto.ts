@@ -21,7 +21,7 @@ export class UserSignUpDto {
   Email: string;
 
   @IsString()
-  @MinLength(6)
+  @MinLength(4)
   @MaxLength(20)
   //   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
   //     message: 'Password Too Weak',
@@ -33,7 +33,5 @@ export class UserSignUpDto {
   Type: number;
 
   @IsString()
-  @MinLength(10)
-  @MaxLength(20)
   ProfileImg: string;
 }

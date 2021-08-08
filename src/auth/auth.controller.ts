@@ -13,7 +13,7 @@ export class AuthController {
 
   @ApiBody({ type: UserSignUpBody })
   @Post('/signUp')
-  userSignUp(@Body() authCredentailsDto: UserSignUpDto) {
-    return { Success: 200 };
+  userSignUp(@Body() SignUpDto: UserSignUpDto) {
+    return this.authService.userSignUp(SignUpDto);
   }
 }

@@ -17,7 +17,6 @@ export class User extends BaseEntity {
 
   @Column('varchar', {
     nullable: false,
-    name: 'name',
   })
   UserName: string;
 
@@ -41,9 +40,17 @@ export class User extends BaseEntity {
   })
   Type: UserRoles;
 
+  @Column('varchar', {
+    nullable: true,
+    
+  })
+  ProfileImg: string;
+
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.Salt);
 
     return hash === this.Password;
   }
 }
+
+
