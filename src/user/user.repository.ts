@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 
 import { hashPassword } from '../utils/hashUtils';
-import { UserSignUpDto } from '../auth/dto';
+import { UserSignUpDto, UserLoginDto } from '../auth/dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -35,6 +35,18 @@ export class UserRepository extends Repository<User> {
       } else {
         throw new InternalServerErrorException();
       }
+    }
+  }
+
+  async validateUserPassword(loginCredentials: UserLoginDto): Promise<number> {
+    const { Email, Password } = loginCredentials;
+
+    const user = await this.findOne({ Email });
+
+    if (user && (await user.validatePassword(Password))) {
+      return user.Id;
+    } else {
+      return null;
     }
   }
 }
