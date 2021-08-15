@@ -1,12 +1,17 @@
 import { Injectable, Scope } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 import { UploadMediaDto } from './dto';
+import { MediaRepository } from './media.repository';
 
 @Injectable({ scope: Scope.REQUEST })
 export class MediaService {
-  constructor() {}
+  constructor(
+    @InjectRepository(MediaRepository)
+    private mediaRepository: MediaRepository,
+  ) {}
 
   uploadMedia(payload: UploadMediaDto, id: number) {
-    console.log(payload, id);
+    return this.mediaRepository.createEntry(payload, id);
   }
 }
