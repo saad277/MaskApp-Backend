@@ -31,4 +31,16 @@ export class MediaRepository extends Repository<Media> {
       throw new InternalServerErrorException();
     }
   }
+
+  async getListing(user) {
+    try {
+      const mediaList = await this.createQueryBuilder('media')
+        .where('media.UserId = :id', { id: user.Id })
+        .getMany();
+
+      return mediaList;
+    } catch (err) {
+      throw new InternalServerErrorException();
+    }
+  }
 }

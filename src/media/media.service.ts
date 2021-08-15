@@ -14,4 +14,8 @@ export class MediaService {
   uploadMedia(payload: UploadMediaDto, id: number) {
     return this.mediaRepository.createEntry(payload, id);
   }
+
+  mediaListing(user) {
+    return this.mediaRepository.getListing(user);
+  }
 }

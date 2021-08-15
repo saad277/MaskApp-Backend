@@ -23,4 +23,11 @@ export class MediaController {
   uploadMedia(@Body() payload: UploadMediaDto, @GetUser() user) {
     return this.mediaService.uploadMedia(payload, user.Id);
   }
+
+  @Roles(UserRoles.User)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/listing')
+  mediaListing(@GetUser() user) {
+    return this.mediaService.mediaListing(user);
+  }
 }
