@@ -9,7 +9,7 @@ import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 
 @ApiBearerAuth('JWT-auth')
 @ApiTags('Auth')
-@Controller('auth')
+@Controller('')
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -20,7 +20,7 @@ export class AuthController {
   }
 
   @ApiBody({ type: UserLoginBody })
-  @Post('/user/login')
+  @Post('/login')
   userLogin(@Body() loginCredentials: UserLoginDto) {
     return this.authService.userLogin(loginCredentials);
   }

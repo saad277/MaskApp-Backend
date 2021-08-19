@@ -32,6 +32,6 @@ export class UserSignUpDto {
   @IsNumber()
   Type: number;
 
-  @IsString()
-  ProfileImg: string;
+  // @IsString()
+  // ProfileImg: string;
 }

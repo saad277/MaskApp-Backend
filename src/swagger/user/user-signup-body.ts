@@ -13,6 +13,6 @@ export class UserSignUpBody {
   @ApiProperty()
   Type: number;
 
-  @ApiProperty()
-  ProfileImg: string;
+  // @ApiProperty()
+  // ProfileImg: string;
 }

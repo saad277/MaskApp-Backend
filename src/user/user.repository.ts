@@ -12,14 +12,20 @@ import { UserSignUpDto, UserLoginDto } from '../auth/dto';
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
   async SignUp(authCredentials: UserSignUpDto) {
-    const { UserName, Password, Email, Type, ProfileImg } = authCredentials;
+    const {
+      UserName,
+      Password,
+      Email,
+      Type,
+      // ProfileImg
+    } = authCredentials;
 
     const user = new User();
 
     user.UserName = UserName;
     user.Type = Type;
     user.Email = Email;
-    user.ProfileImg = ProfileImg;
+    //user.ProfileImg = ProfileImg;
     const salt = await bcrypt.genSalt();
     user.Salt = salt;
     user.Password = await hashPassword(Password, salt);
