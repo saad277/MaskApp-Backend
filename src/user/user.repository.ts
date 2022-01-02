@@ -8,6 +8,7 @@ import {
 
 import { hashPassword } from '../utils/hashUtils';
 import { UserSignUpDto, UserLoginDto } from '../auth/dto';
+import { UpdateFcmDto } from '../user/dto';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -34,7 +35,7 @@ export class UserRepository extends Repository<User> {
       await user.save();
       return { Status: 200, Message: 'Profile Created Successfully' };
     } catch (err) {
-      console.log(err);
+      // console.log(err);
 
       if (err.code == 23505) {
         throw new ConflictException('User already exists');
@@ -53,6 +54,17 @@ export class UserRepository extends Repository<User> {
       return user.Id;
     } else {
       return null;
+    }
+  }
+
+  async updateUserFcm(fcmBody: UpdateFcmDto, id) {
+    const { FcmToken } = fcmBody;
+
+    try {
+      await this.update(id, { FcmToken });
+      return { Status: 200, Message: 'FcmToken Updated' };
+    } catch {
+      throw new InternalServerErrorException();
     }
   }
 }

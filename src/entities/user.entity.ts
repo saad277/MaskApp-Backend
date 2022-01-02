@@ -42,9 +42,11 @@ export class User extends BaseEntity {
 
   @Column('varchar', {
     nullable: true,
-    
   })
   ProfileImg: string;
+
+  @Column('varchar', { nullable: true })
+  FcmToken: string;
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.Salt);
@@ -52,5 +54,3 @@ export class User extends BaseEntity {
     return hash === this.Password;
   }
 }
-
-
