@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Media extends BaseEntity {
@@ -25,4 +32,10 @@ export class Media extends BaseEntity {
 
   @Column('varchar')
   Img: string;
+
+  @CreateDateColumn()
+  CreatedAt: Date;
+
+  @UpdateDateColumn()
+  UpdatedAt: Date;
 }
