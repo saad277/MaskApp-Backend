@@ -25,6 +25,12 @@ export class AuthController {
     return this.authService.userLogin(loginCredentials);
   }
 
+  @ApiBody({ type: UserLoginBody })
+  @Post('/adminLogin')
+  adminLogin(@Body() loginCredentials: UserLoginDto) {
+    return this.authService.adminLogin(loginCredentials);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('/user/me')
   getMe(@GetUser() user) {
