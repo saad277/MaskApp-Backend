@@ -18,4 +18,8 @@ export class MediaService {
   mediaListing(user) {
     return this.mediaRepository.getListing(user);
   }
+
+  allMediaListing() {
+    return this.mediaRepository.getAllListing();
+  }
 }

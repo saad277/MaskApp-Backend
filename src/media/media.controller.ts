@@ -30,4 +30,11 @@ export class MediaController {
   mediaListing(@GetUser() user) {
     return this.mediaService.mediaListing(user);
   }
+
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/all-listing')
+  allListing(@GetUser() user) {
+    return this.mediaService.allMediaListing();
+  }
 }
