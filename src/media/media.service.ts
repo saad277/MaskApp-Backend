@@ -15,7 +15,7 @@ export class MediaService {
     return this.mediaRepository.createEntry(payload, id);
   }
 
-  mediaListing(user) {
+  mediaListing(user: any) {
     return this.mediaRepository.getListing(user);
   }
 

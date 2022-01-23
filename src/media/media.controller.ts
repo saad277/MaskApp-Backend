@@ -34,7 +34,7 @@ export class MediaController {
   @Roles(UserRoles.Admin)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/all-listing')
-  allListing(@GetUser() user) {
+  allListing() {
     return this.mediaService.allMediaListing();
   }
 }
