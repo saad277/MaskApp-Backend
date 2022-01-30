@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { MediaService } from './media.service';
@@ -36,5 +36,12 @@ export class MediaController {
   @Get('/all-listing')
   allListing() {
     return this.mediaService.allMediaListing();
+  }
+
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get(':id')
+  mediaDetails(@Param() params: any) {
+    return this.mediaService.mediaDetails(params.id);
   }
 }

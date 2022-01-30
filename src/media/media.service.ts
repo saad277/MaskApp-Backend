@@ -22,4 +22,8 @@ export class MediaService {
   allMediaListing() {
     return this.mediaRepository.getAllListing();
   }
+
+  mediaDetails(id: any) {
+    return this.mediaRepository.getMediaDetails(id);
+  }
 }

@@ -33,6 +33,9 @@ export class Media extends BaseEntity {
   @Column('varchar')
   Img: string;
 
+  @Column({ type: 'int', default: null })
+  Status: number;
+
   @CreateDateColumn()
   CreatedAt: Date;
 

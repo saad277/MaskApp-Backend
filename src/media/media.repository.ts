@@ -1,5 +1,8 @@
 import { Repository, EntityRepository } from 'typeorm';
-import { InternalServerErrorException } from '@nestjs/common';
+import {
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 
 import { Media } from '../entities';
 import { UploadMediaDto } from './dto';
@@ -55,5 +58,14 @@ export class MediaRepository extends Repository<Media> {
     } catch (err) {
       throw new InternalServerErrorException();
     }
+  }
+
+  async getMediaDetails(id: any) {
+    const media = await this.findOne({ Id: id });
+
+    if (media) {
+      return media;
+    }
+    throw new NotFoundException();
   }
 }
