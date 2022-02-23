@@ -1,5 +1,6 @@
 import { Injectable, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HttpService } from '@nestjs/axios';
 
 import { UploadMediaDto } from './dto';
 import { MediaRepository } from './media.repository';
@@ -11,6 +12,7 @@ export class MediaService {
     @InjectRepository(MediaRepository)
     private mediaRepository: MediaRepository,
     private userRepo: UserRepository,
+    private httpService: HttpService,
   ) {}
 
   uploadMedia(payload: UploadMediaDto, id: number) {
@@ -35,7 +37,6 @@ export class MediaService {
 
     const user = await this.userRepo.findOne({ Id: UserId });
 
-    console.log("userrrrrrr",user)
-
+    return { Status: 200, token: user.FcmToken };
   }
 }
