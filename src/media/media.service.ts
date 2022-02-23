@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { UploadMediaDto } from './dto';
 import { MediaRepository } from './media.repository';
+import { UserRepository } from '../user/user.repository';
 
 @Injectable({ scope: Scope.REQUEST })
 export class MediaService {
   constructor(
     @InjectRepository(MediaRepository)
     private mediaRepository: MediaRepository,
+    private userRepo: UserRepository,
   ) {}
 
   uploadMedia(payload: UploadMediaDto, id: number) {
@@ -25,5 +27,15 @@ export class MediaService {
 
   mediaDetails(id: any) {
     return this.mediaRepository.getMediaDetails(id);
+  }
+
+  async statusUpdate(id: any, payload: any) {
+    const { UserId } = payload;
+    const res = await this.mediaRepository.statusUpdate(id, payload);
+
+    const user = await this.userRepo.findOne({ Id: UserId });
+
+    console.log("userrrrrrr",user)
+
   }
 }

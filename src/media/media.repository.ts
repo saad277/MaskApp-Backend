@@ -68,4 +68,17 @@ export class MediaRepository extends Repository<Media> {
     }
     throw new NotFoundException();
   }
+
+  async statusUpdate(id, payload) {
+    const { Status } = payload;
+
+    const media = await this.findOne({ Id: id });
+
+    if (media) {
+      await this.update(id, { Status });
+      return { Status: 200, Message: 'Status Updated' };
+    }
+
+    throw new NotFoundException();
+  }
 }

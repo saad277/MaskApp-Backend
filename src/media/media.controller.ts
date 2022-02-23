@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { MediaService } from './media.service';
-import { UploadMediaDto } from './dto';
+import { UploadMediaDto, StatusMediaDto } from './dto/';
 import { MediaUploadBody } from '../swagger';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
@@ -43,5 +43,12 @@ export class MediaController {
   @Get(':id')
   mediaDetails(@Param() params: any) {
     return this.mediaService.mediaDetails(params.id);
+  }
+
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/status/:id')
+  statusMedia(@Param() params: any, @Body() payload: StatusMediaDto) {
+    return this.mediaService.statusUpdate(params.id, payload);
   }
 }
