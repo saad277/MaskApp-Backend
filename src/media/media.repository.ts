@@ -83,14 +83,15 @@ export class MediaRepository extends Repository<Media> {
   }
 
   async getMediaInDateRange(payload: any) {
-    const start = new Date('2022-01-15');
-    let end = new Date('2022-01-20');
+    const { StartDate, EndDate } = payload;
+    const start = new Date(StartDate);
+    let end = new Date(EndDate);
     end.setDate(end.getDate() + 1);
     const result = await this.createQueryBuilder('q')
       .where(
         `q.CreatedAt BETWEEN '${start.toISOString()}' AND '${end.toISOString()}'`,
       )
-      .select(['q.CreatedAt'])
+      //.select(['q.CreatedAt'])
       .getMany();
 
     return { Data: result, Status: 200 };
