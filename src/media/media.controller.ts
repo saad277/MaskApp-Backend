@@ -2,8 +2,8 @@ import { Controller, Post, Body, Get, UseGuards, Param } from '@nestjs/common';
 import { ApiBody, ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { MediaService } from './media.service';
-import { UploadMediaDto, StatusMediaDto } from './dto/';
-import { MediaUploadBody } from '../swagger';
+import { UploadMediaDto, StatusMediaDto, DateRangeMediaDto } from './dto/';
+import { MediaUploadBody, RangeMediaBody } from '../swagger';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
 import { Roles } from '../decorators/role-auth.decorator';
@@ -50,5 +50,13 @@ export class MediaController {
   @Post('/status/:id')
   statusMedia(@Param() params: any, @Body() payload: StatusMediaDto) {
     return this.mediaService.statusUpdate(params.id, payload);
+  }
+
+  @ApiBody({ type: RangeMediaBody })
+  @Roles(UserRoles.Admin)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/range')
+  mediaInDateRange(@Body() payload: DateRangeMediaDto) {
+    return this.mediaService.getMediaInDateRange(payload);
   }
 }

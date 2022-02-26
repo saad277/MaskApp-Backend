@@ -9,7 +9,7 @@ import { UploadMediaDto } from './dto';
 
 @EntityRepository(Media)
 export class MediaRepository extends Repository<Media> {
-  async createEntry(payload: UploadMediaDto, userId) {
+  async createEntry(payload: UploadMediaDto, userId: any) {
     const { Area, Description, Img, Location, WithMask, WithoutMask } = payload;
 
     const media = new Media();
@@ -69,7 +69,7 @@ export class MediaRepository extends Repository<Media> {
     throw new NotFoundException();
   }
 
-  async statusUpdate(id, payload) {
+  async statusUpdate(id: any, payload: any) {
     const { Status } = payload;
 
     const media = await this.findOne({ Id: id });
@@ -80,5 +80,19 @@ export class MediaRepository extends Repository<Media> {
     }
 
     throw new NotFoundException();
+  }
+
+  async getMediaInDateRange(payload: any) {
+    const start = new Date('2022-01-15');
+    let end = new Date('2022-01-20');
+    end.setDate(end.getDate() + 1);
+    const result = await this.createQueryBuilder('q')
+      .where(
+        `q.CreatedAt BETWEEN '${start.toISOString()}' AND '${end.toISOString()}'`,
+      )
+      .select(['q.CreatedAt'])
+      .getMany();
+
+    return { Data: result, Status: 200 };
   }
 }

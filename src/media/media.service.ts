@@ -39,4 +39,8 @@ export class MediaService {
 
     return { Status: 200, token: user.FcmToken };
   }
+
+  async getMediaInDateRange(payload: any) {
+    return this.mediaRepository.getMediaInDateRange(payload);
+  }
 }
