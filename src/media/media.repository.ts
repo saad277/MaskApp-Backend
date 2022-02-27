@@ -14,6 +14,9 @@ export class MediaRepository extends Repository<Media> {
 
     const media = new Media();
 
+    const withMaskPercent = (WithMask / WithMask + WithoutMask) * 100;
+    const withoutMaskPercent = (WithoutMask / WithMask + WithoutMask) * 100;
+
     media.UserId = userId;
     media.Area = Area;
     media.Description = Description;
@@ -21,6 +24,16 @@ export class MediaRepository extends Repository<Media> {
     media.Location = Location;
     media.WithMask = WithMask;
     media.WithoutMask = WithoutMask;
+
+    if (withMaskPercent > WithoutMask) {
+      media.Status = 1;
+    } else if (withoutMaskPercent > 75) {
+      media.Status = 3; //3 is high
+    } else if (withoutMaskPercent < 75 && withoutMaskPercent > 50) {
+      media.Status = 2; //2 is medium
+    } else if (withoutMaskPercent < 50) {
+      media.Status = 1;
+    }
 
     try {
       await media.save();
